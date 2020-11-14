@@ -1,13 +1,14 @@
 import React from 'react';
 // COmponents and Pages
 import Home from './pages/Home';
+import GlobalStyles from './components/GlobalStyles';
 
 
 function App() {
 
   return (
     <div className="App">
-      <h1>Hello Tomatoes Games</h1>
+      <GlobalStyles />
       <Home />
     </div>
   );
