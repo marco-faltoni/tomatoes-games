@@ -7,38 +7,42 @@ import {motion} from 'framer-motion';
 
 const GameDetails = ({name, released, image, id}) => {
     // extracting data "detail" from redux state
-    const {screen, game} = useSelector(store => store.detail);
+    const {screen, game, isLoading} = useSelector(store => store.detail);
 
     return (
-        <CardShadow className="card-shadow">
-            <Detail className="detail">
-                <Stats className="stats">
-                    <div className="rating">
-                        <h3> {game.name} </h3>
-                        <p> Rating: {game.rating} </p>
+        <>
+        {!isLoading && (
+            <CardShadow className="card-shadow">
+                <Detail className="detail">
+                    <Stats className="stats">
+                        <div className="rating">
+                            <h3> {game.name} </h3>
+                            <p> Rating: {game.rating} </p>
+                        </div>
+                        <Info className="info">
+                            <h3>Platforms:</h3>
+                            <Platfroms className="platforms">
+                                {game.platforms.map(plat =>(
+                                    <h3 key={plat.platform.id} > {plat.platform.name} </h3>
+                                ))}
+                            </Platfroms>
+                        </Info>
+                    </Stats>
+                    <Media className="media">
+                        <img src={game.background_image} alt={`${game.name} image`} />
+                    </Media>
+                    <Description className="description">
+                        <p> {game.description_raw} </p>
+                    </Description>
+                    <div className="gallery">
+                        {screen.results.map(screen =>(
+                            <img src={screen.image} key={screen.id} alt={`${game.name} screenshot`}/>
+                        ))}
                     </div>
-                    <Info className="info">
-                        <h3>Platforms:</h3>
-                        <Platfroms className="platforms">
-                            {game.platforms.map(plat =>(
-                                <h3 key={plat.platform.id} > {plat.platform.name} </h3>
-                            ))}
-                        </Platfroms>
-                    </Info>
-                </Stats>
-                <Media className="media">
-                    <img src={game.background_image} alt={`${game.name} image`} />
-                </Media>
-                <Description className="description">
-                    <p> {game.description_raw} </p>
-                </Description>
-                <div className="gallery">
-                    {screen.results.map(screen =>(
-                        <img src={screen.image} key={screen.id} alt={`${game.name} screenshot`}/>
-                    ))}
-                </div>
-            </Detail>
-        </CardShadow>
+                </Detail>
+            </CardShadow>
+        )}
+        </>
     )
 }
 
