@@ -6,22 +6,27 @@ import {loadDetails} from '../actions/detailAction';
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
+import {resizeImg} from '../util';
 
 const Game = ({name, released, image, id}) => {
+    // for the card animation i need to covert the id to a string to match the another id from GameDetails
+    const idToString = id.toString();
+    
     // load details
     const dispatch = useDispatch();
     // on click i get details from the game: thanks to dispatch, i run the action's function for the details
     const loadDetailsHandler = () => {
+        document.body.style.overflow = 'hidden';
         dispatch(loadDetails(id));
     }
 
 
     return (
-        <StyledGame onClick={loadDetailsHandler} >
+        <StyledGame layoutId={idToString} onClick={loadDetailsHandler} >
             <Link to={`/game/${id}`} >
-                <h3>{name}</h3>
+                <motion.h3 layoutId={`title ${idToString}`}>{name}</motion.h3>
                 <p>{released}</p>
-                <img src={image} alt={name} />
+                <motion.img layoutId={`image ${idToString}`} src={resizeImg(image, 640)} alt={name} />
             </Link>   
         </StyledGame>
     )

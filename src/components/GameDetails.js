@@ -4,19 +4,34 @@ import {useSelector} from 'react-redux';
 // style and animation
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
+import {useHistory} from 'react-router-dom';
+import {resizeImg} from '../util';
 
-const GameDetails = ({name, released, image, id}) => {
+const GameDetails = ({pathID}) => {
     // extracting data "detail" from redux state
     const {screen, game, isLoading} = useSelector(store => store.detail);
+    
+
+    // exit page detail
+    const history = useHistory();
+    const exitHandler = (e) => {
+        const element = e.target;
+        // console.log(element);
+        
+        if (element.classList.contains('shadow')) {
+            document.body.style.overflow = 'auto';
+            history.push('/');
+        }
+    };
 
     return (
         <>
         {!isLoading && (
-            <CardShadow className="card-shadow">
-                <Detail className="detail">
+            <CardShadow className="shadow" onClick={exitHandler} >
+                <Detail layoutId={pathID} className="detail">
                     <Stats className="stats">
                         <div className="rating">
-                            <h3> {game.name} </h3>
+                            <motion.h3 layoutId={`title ${pathID}`}> {game.name} </motion.h3>
                             <p> Rating: {game.rating} </p>
                         </div>
                         <Info className="info">
@@ -29,14 +44,14 @@ const GameDetails = ({name, released, image, id}) => {
                         </Info>
                     </Stats>
                     <Media className="media">
-                        <img src={game.background_image} alt={`${game.name} image`} />
+                        <motion.img layoutId={`image ${pathID}`} src={resizeImg(game.background_image, 1280) } alt={`${game.name} image`} />
                     </Media>
                     <Description className="description">
                         <p> {game.description_raw} </p>
                     </Description>
                     <div className="gallery">
                         {screen.results.map(screen =>(
-                            <img src={screen.image} key={screen.id} alt={`${game.name} screenshot`}/>
+                            <img src={resizeImg(screen.image, 1280) } key={screen.id} alt={`${game.name} screenshot`}/>
                         ))}
                     </div>
                 </Detail>
@@ -54,6 +69,7 @@ const CardShadow = styled(motion.div)`
     position: fixed;
     top: 0;
     left: 0;
+    z-index:10;
     &::-webkit-scrollbar {
         width:0.5rem;
     }
@@ -73,6 +89,7 @@ const Detail = styled(motion.div)`
     position: absolute;
     left:10%;
     color: black;
+    z-index:10;
     img {
         width:100%;
     }
