@@ -6,6 +6,18 @@ import styled from 'styled-components';
 import {motion} from 'framer-motion';
 import {useHistory} from 'react-router-dom';
 import {resizeImg} from '../util';
+// images
+import playstation from "../img/playstation.svg";
+import ps5 from "../img/PS5_logo.svg";
+import steam from "../img/steam.svg";
+import xbox from "../img/xbox.svg";
+import xboxnextgen from "../img/xb.svg";
+import nintendo from "../img/nintendo.svg";
+import apple from "../img/apple.svg";
+import gamepad from "../img/gamepad.svg";
+//Star Images
+import starEmpty from "../img/star-empty.png";
+import starFull from "../img/star-full.png";
 
 const GameDetails = ({pathID}) => {
     // extracting data "detail" from redux state
@@ -24,6 +36,28 @@ const GameDetails = ({pathID}) => {
         }
     };
 
+    //get platform images
+    const getPlatform = (platform) => {
+        switch (platform) {
+        case "PlayStation 5":
+            return ps5;
+        case "PlayStation 4":
+            return playstation;
+        case "Xbox Series S/X":
+            return xboxnextgen;
+        case "Xbox One":
+            return xbox;
+        case "PC":
+            return steam;
+        case "Nintendo Switch":
+            return nintendo;
+        case "iOS":
+            return apple;
+        default:
+            return gamepad;
+        }
+    };
+
     return (
         <>
         {!isLoading && (
@@ -38,7 +72,7 @@ const GameDetails = ({pathID}) => {
                             <h3>Platforms:</h3>
                             <Platfroms className="platforms">
                                 {game.platforms.map(plat =>(
-                                    <h3 key={plat.platform.id} > {plat.platform.name} </h3>
+                                    <img key={plat.platform.id} src={getPlatform(plat.platform.name)} alt={`platform: ${plat.platform.name}`} />
                                 ))}
                             </Platfroms>
                         </Info>
@@ -110,6 +144,7 @@ const Platfroms = styled(motion.div)`
     justify-content: space-evenly;
     img {
         margin-left: 3rem;
+        width: 45px;
     }
 `;
 
