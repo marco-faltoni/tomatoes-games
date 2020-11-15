@@ -13,6 +13,9 @@ const StyledGame = createGlobalStyle `
         &::-webkit-scrollbar-thumb {
             background-color: darkgrey;
         }
+        &::-webkit-scrollbar-track {
+        background: whitesmoke;
+        }
     }
     body {
         font-family: 'Montserrat', sans-serif;
@@ -27,7 +30,7 @@ const StyledGame = createGlobalStyle `
     h3 {
         font-size: 1.3rem;
         color: #333;
-        padding:1.5rem;
+        padding:1.5rem 0rem;
     }
     p{
         font-size: 1.1rem;
