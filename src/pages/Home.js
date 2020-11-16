@@ -24,12 +24,22 @@ function Home() {
         dispatch(loadGames());
     },[dispatch]);
     // getting back the data
-    const {popular, newGames, upcoming} = useSelector((store) => store.games);
+    const {popular, newGames, upcoming, searched} = useSelector((store) => store.games);
     
     return (
     <GameList>
         <AnimateSharedLayout type="crossfade">
             <AnimatePresence> {pathID && <GameDetails pathID={pathID} />} </AnimatePresence>
+            {searched.length ? (
+                <div className='searched'>
+                    <h2>Searched Games</h2>
+                    <Games>
+                        {searched.map((game)=> {
+                            return <Game name={game.name} released={game.released} id={game.id} image={game.background_image} key={game.id} /> 
+                        })}
+                    </Games>
+                </div>
+            ): ''}
             <h2>Upcoming Games</h2>
             <Games>
                 {upcoming.map((game)=> {

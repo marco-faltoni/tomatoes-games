@@ -4,7 +4,7 @@ import {gameScreenshotsURL} from '../api';
 
 export const loadDetails = (id) => async (dispatch) => {
 
-    // ancora devo caricare i dati quindi non far apparire il contenitore detatgli card finche non ce li ho
+    // ancora devo caricare i dati quindi non far apparire il contenitore dettagli card finche non ce li ho
     dispatch({
         type: "LOADING"
     })
