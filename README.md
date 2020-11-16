@@ -1,4 +1,4 @@
-<h4 align="center">React API Game Library</h4>
+<h2 align="center">React API Game Library</h2>
 
 <p align="center"><img  width="70%" src="https://github.com/marco-faltoni/tomatoes-games/blob/main/screen.jpg"></p>
 
