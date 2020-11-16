@@ -16,8 +16,9 @@ import nintendo from "../img/nintendo.svg";
 import apple from "../img/apple.svg";
 import gamepad from "../img/gamepad.svg";
 //Star Images
-import starEmpty from "../img/star-empty.png";
-import starFull from "../img/star-full.png";
+import starEmpty from "../img/star-empty.svg";
+import starFull from "../img/star-full.svg";
+import starHalf from "../img/star-half.svg";
 
 const GameDetails = ({pathID}) => {
     // extracting data "detail" from redux state
@@ -58,6 +59,34 @@ const GameDetails = ({pathID}) => {
         }
     };
 
+    // return stars icons 
+    const getStars = () => {
+        // imposto array vuoto
+        const stars = [];
+        // normalizzo il voto arrotondandolo ad un numero intero o alla sua meta(es. 3, 3.5 o 4)
+        const rating = Math.round(game.rating / 0.5) * 0.5;
+        // console.log(rating);
+
+        // salvo in una variabile il voto normalizzato di prima arrontodandolo al minimo
+        const fullStars = Math.floor(rating);
+        // console.log(fullStars);
+
+        // verifico e salvo in una variabile se il voto arrotondato al minimo è minore del voto normalizzato, se è vero allora vuol diro che il voto normalizzato deve avere un rating con l'ultima stella a metà
+        const HalfStar = (fullStars < rating);
+        
+        // faccio un ciclo, finche la i è minore al voto arrotondato al minimo stampo stelle piene, se la variabile "HalfStar" è vera stampo una stellina a metò, se è falsa stampo le restanti stelline vuote
+        for (let i = 1; i <= 5; i++) {
+            if (i <= fullStars) {
+                stars.push(<img key={i} src={starFull} alt='star' ></img>);
+            } else if(HalfStar) {
+                stars.push(<img key={i} src={starHalf} alt='star' ></img>);
+            } else {
+                stars.push(<img key={i} src={starEmpty} alt='star' ></img>);
+            }
+        }
+        return stars;
+    }
+
     return (
         <>
         {!isLoading && (
@@ -67,6 +96,7 @@ const GameDetails = ({pathID}) => {
                         <div className="rating">
                             <motion.h3 layoutId={`title ${pathID}`}> {game.name} </motion.h3>
                             <p> Rating: {game.rating} </p>
+                            {getStars()}
                         </div>
                         <Info className="info">
                             <h3>Platforms:</h3>
@@ -133,6 +163,11 @@ const Stats = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .rating img {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
 `;
 
 const Info = styled(motion.div)`
@@ -149,7 +184,7 @@ const Platfroms = styled(motion.div)`
 `;
 
 const Media = styled(motion.div)`
-    margin-top: 5rem;
+    margin-top: 3rem;
     img {
         width: 100%;
         /* height: 60vh;
