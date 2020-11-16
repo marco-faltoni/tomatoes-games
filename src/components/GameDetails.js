@@ -74,7 +74,7 @@ const GameDetails = ({pathID}) => {
         // verifico e salvo in una variabile se il voto arrotondato al minimo è minore del voto normalizzato, se è vero allora vuol diro che il voto normalizzato deve avere un rating con l'ultima stella a metà
         const HalfStar = (fullStars < rating);
         
-        // faccio un ciclo, finche la i è minore al voto arrotondato al minimo stampo stelle piene, se la variabile "HalfStar" è vera stampo una stellina a metò, se è falsa stampo le restanti stelline vuote
+        // faccio un ciclo, finche la i è minore al voto arrotondato al minimo stampo stelle piene, se la variabile "HalfStar" è vera stampo(dopo quelle piene) una stellina a metà, se è falsa stampo le restanti stelline vuote
         for (let i = 1; i <= 5; i++) {
             if (i <= fullStars) {
                 stars.push(<img key={i} src={starFull} alt='star' ></img>);

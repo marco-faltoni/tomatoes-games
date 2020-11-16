@@ -41,6 +41,10 @@ const StyledGame = createGlobalStyle `
         text-decoration: none;
         color: #333;
     }
+    input {
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+    }
 `;
 
 export default StyledGame;
