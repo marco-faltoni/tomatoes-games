@@ -26,6 +26,9 @@ const StyledGame = createGlobalStyle `
         font-family: 'Abril Fatface', cursive;
         font-weight: lighter;
         color: #333;
+        @media (max-width: 600px) {
+            font-size: 2rem;
+        }
     }
     h3 {
         font-size: 1.3rem;
@@ -36,6 +39,10 @@ const StyledGame = createGlobalStyle `
         font-size: 1.1rem;
         line-height: 200%;
         color:#696969;
+    }
+    #card-text {
+        margin-bottom: 1rem;
+        font-style: italic;
     }
     a {
         text-decoration: none;

@@ -72,7 +72,7 @@ const GameDetails = ({pathID}) => {
         // console.log(fullStars);
 
         // verifico e salvo in una variabile se il voto arrotondato al minimo è minore del voto normalizzato, se è vero allora vuol diro che il voto normalizzato deve avere un rating con l'ultima stella a metà
-        const HalfStar = (fullStars < rating);
+        let HalfStar = (fullStars < rating);
         
         // faccio un ciclo, finche la i è minore al voto arrotondato al minimo stampo stelle piene, se la variabile "HalfStar" è vera stampo(dopo quelle piene) una stellina a metà, se è falsa stampo le restanti stelline vuote
         for (let i = 1; i <= 5; i++) {
@@ -80,6 +80,8 @@ const GameDetails = ({pathID}) => {
                 stars.push(<img key={i} src={starFull} alt='star' ></img>);
             } else if(HalfStar) {
                 stars.push(<img key={i} src={starHalf} alt='star' ></img>);
+                // setto la variabile halfstar come falsa altrimenti al prossimo ciclo continua a mettere stelle a metà e non passa alla condizione else
+                HalfStar = false;
             } else {
                 stars.push(<img key={i} src={starEmpty} alt='star' ></img>);
             }
@@ -94,7 +96,7 @@ const GameDetails = ({pathID}) => {
                 <Detail layoutId={pathID} className="detail">
                     <Stats className="stats">
                         <div className="rating">
-                            <motion.h3 layoutId={`title ${pathID}`}> {game.name} </motion.h3>
+                            <motion.h3 layoutId={`title ${pathID}`}> {game.name}</motion.h3>
                             <p> Rating: {game.rating} </p>
                             {getStars()}
                         </div>
@@ -111,6 +113,9 @@ const GameDetails = ({pathID}) => {
                         <motion.img layoutId={`image ${pathID}`} src={resizeImg(game.background_image, 1280) } alt={`${game.name} image`} />
                     </Media>
                     <Description className="description">
+                        {game.publishers[0] && (
+                            <h3>Publisher: <i>{game.publishers[0].name}</i> </h3>
+                        )}
                         <p> {game.description_raw} </p>
                     </Description>
                     <div className="gallery">
@@ -149,6 +154,8 @@ const Detail = styled(motion.div)`
     width: 80%;
     border-radius: 1rem;
     padding: 2rem 5rem;
+    padding-bottom: 4rem;
+    margin: 4rem 0rem;
     background: whitesmoke;
     position: absolute;
     left:10%;
@@ -157,29 +164,107 @@ const Detail = styled(motion.div)`
     img {
         width:100%;
     }
+    @media (max-width: 900px) {
+        padding: 2rem 3rem;
+    }
+    @media (max-width: 600px) {
+        padding: 1rem 1rem;
+        width: 90%;
+        left:5%;
+    }
 `;
 
 const Stats = styled(motion.div)`
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: flex-start;
     .rating img {
         display: inline-block;
         width: 1.5rem;
         height: 1.5rem;
     }
+    #publisher{
+        font-style:italic;
+        font-weight: lighter;
+    }
+    @media (max-width: 900px) {
+        flex-direction: column;
+        align-items: initial;
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            h3 {
+                flex-basis: 15rem;
+            }
+            p {
+                font-size: 1rem;
+                margin-right: 0.5rem;
+            }
+            img {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+        }
+    }
+    @media (max-width: 600px) {
+        .rating {
+            h3 {
+                font-size: 1rem;
+                flex-basis: 15rem;
+            }
+            p {
+                font-size: 0.8rem;
+                margin-right: 0.5rem;
+                line-height: 1rem;
+            }
+            img {
+                width: 1rem;
+                height: 1rem;
+            }
+        }
+    }
 `;
 
 const Info = styled(motion.div)`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
+    width: 35%;
+    @media (max-width: 900px) {
+        width: 100%;
+        flex-direction: initial;
+        align-items: center;
+    }
+    @media (max-width: 600px) {
+        h3 {
+            font-size: 1rem;
+        }
+    }
 `;
 
 const Platfroms = styled(motion.div)`
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     img {
-        margin-left: 3rem;
         width: 45px;
+        @media (max-width: 900px) {
+            width: 35px;
+        }
+        @media (max-width: 600px) {
+            width: 25px;
+            margin-top: 0.5rem;
+        }
+    }
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        width: 80%;
+        margin-left: 1rem;
+    }
+    @media (max-width: 600px) {
+        width: 90%;
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
     }
 `;
 
@@ -193,7 +278,12 @@ const Media = styled(motion.div)`
 `;
 
 const Description = styled(motion.div)`
-    margin: 5rem 0rem;
+    margin: 2rem 0rem;
+    @media (max-width: 600px) {
+        p {
+            font-size: 0.8rem;
+        }
+    }
 `;
 
 export default GameDetails;
