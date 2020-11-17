@@ -60,6 +60,7 @@ const StyledNav = styled(motion.div) `
         border-bottom-right-radius: none;
         border-bottom-left-radius: 5px;
         outline: none;
+        border: 1px solid #d4d4d4;
         }
         button {
             padding: 0.5rem 2rem;

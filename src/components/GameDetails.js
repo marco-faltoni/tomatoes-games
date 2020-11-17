@@ -280,6 +280,9 @@ const Media = styled(motion.div)`
 const Description = styled(motion.div)`
     margin: 2rem 0rem;
     @media (max-width: 600px) {
+        h3 {
+            font-size: 1rem;
+        }
         p {
             font-size: 0.8rem;
         }
